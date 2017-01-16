@@ -1,0 +1,26 @@
+{
+  "name": "lo3_demo_scripts",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/konstantinzolotarev/lo3_demo_scripts.git"
+  },
+  "author": "Konstantin Zolotarev <konstantin.zolotarev@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/konstantinzolotarev/lo3_demo_scripts/issues"
+  },
+  "homepage": "https://github.com/konstantinzolotarev/lo3_demo_scripts#readme",
+  "dependencies": {
+    "config": "^1.24.0",
+    "eris-contracts-promise": "^1.0.2",
+    "eris-db-promise": "^1.0.3",
+    "lodash": "^4.17.4",
+    "solc": "^0.3.4"
+  }
+}
