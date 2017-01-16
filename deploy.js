@@ -16,8 +16,8 @@ const tx = {
 const eris = erisDb.createInstance(config.rpc.node1)
 
 eris
-  .transactions
-  .sendTransaction(tx, deployer.privKey)
+  .unsafe
+  .transactAndHold(deployer.privKey, contract.bytecode, '', 0, 10000)
   .then((info) => {
     console.log('==========================')
     console.log(info.call_data.callee)
@@ -28,3 +28,9 @@ eris
     console.log('error: ', err)
     console.log('==========================')
   })
+
+process.on('uncaughtException', (err) => {
+  console.log('==========================')
+  console.log('error: ', err)
+  console.log('==========================')
+})
