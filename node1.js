@@ -1,7 +1,9 @@
 'use strict'
 
 const erisDb = require('eris-db-promise')
+const erisContracts = require('eris-contracts-promise')
 const config = require('config')
+const contract = require('./contract')
 const _ = require('lodash')
 
 if (!process.argv[2]) {
@@ -13,6 +15,8 @@ if (!process.argv[2]) {
 
 const deployedAddress = process.argv[2]
 const eris = erisDb.createInstance(config.rpc.node1)
+const manager = erisContracts.newContractManager(config.rpc.node2, config.accounts.lo3_demo_chain_root_001)
+const instance = manager.newContract(contract.abi, contract.bytecode, deployedAddress)
 
 let subId
 let interval
@@ -26,10 +30,22 @@ function setupListener () {
       .eventPoll(subId)
       .then((events) => {
         if (_.isArray(events) && events.length > 0) {
-          console.log('==========================')
-          console.log(events)
-          console.log('==========================')
+          return instance
+            .at(deployedAddress)
         }
+        return false
+      })
+      .then((con) => {
+        if (!con)
+          return
+
+        return con
+          .get(deployedAddress)
+          .then((value) => {
+            console.log('==========================')
+            console.log(`Set for address: ${deployedAddress} value: ${value.toNumber()}`)
+            console.log('==========================')
+          })
       })
   }, 1000)
 }

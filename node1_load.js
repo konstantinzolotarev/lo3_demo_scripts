@@ -13,15 +13,12 @@ if (!process.argv[2]) {
 }
 
 const deployedAddress = process.argv[2]
-const value = process.argv[3] || 10
-const manager = erisContracts.newContractManager(config.rpc.node2, config.accounts.lo3_demo_chain_root_001)
+const manager = erisContracts.newContractManager(config.rpc.node1, config.accounts.lo3_demo_chain_root_000)
 const instance = manager.newContract(contract.abi, contract.bytecode, deployedAddress)
 
 instance.at(deployedAddress)
   .then((con) => {
-    return con
-      .add(deployedAddress, value)
-      .then(() => con.get(deployedAddress))
+    return con.get(deployedAddress)
       .then((value) => {
         console.log('==========================')
         console.log(`Set for address: ${deployedAddress} value: ${value.toNumber()}`)
